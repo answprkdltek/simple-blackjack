@@ -30,4 +30,11 @@ public class PlayerTest {
         Player player = new Player(5000);
         player.placeBet(10000);
     }
+
+    public void 플레이어는_상금을_받을_수_있다() {
+        Player player = new Player(5000);
+        player.receiveReward(3000);
+        int balance = player.getBalance();
+        assertEquals(balance, 8000);
+    }
 }
