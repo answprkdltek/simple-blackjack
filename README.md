@@ -15,5 +15,5 @@ simple-blackjack 구현 방법에 대한 문서이다.
 * Dealer: 딜러
 * Player: 참가자
 * Hand: 카드 패
-* Evaluator: 계산하는 놈
+* Evaluator: 진행요원
 * Game: 게임
