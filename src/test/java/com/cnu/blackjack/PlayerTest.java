@@ -25,7 +25,7 @@ public class PlayerTest {
         assertEquals(2000, balance);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = NotEnoughBalanceException.class)
     public void 플레이어는_가진돈보다_많이_배팅할수없다() {
         Player player = new Player(5000);
         player.placeBet(10000);
