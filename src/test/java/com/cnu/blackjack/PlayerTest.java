@@ -22,7 +22,7 @@ public class PlayerTest {
         Player player = new Player(5000);
         player.placeBet(3000);
         int balance = player.getBalance();
-        assertEquals(2000, balance);
+        assertEquals(balance, 2000);
     }
 
     @Test(expected = NotEnoughBalanceException.class)
