@@ -18,6 +18,30 @@ public class PlayerTest {
     }
 
     @Test
+    public void 플레이어는_기본적으로_Com컨트롤러를_가진다() {
+        Player player = new Player("BlackJackKing", 5000);
+
+        PlayerController controller = player.getController();
+        assertEquals(controller.getClass(), ComPlayerController.class);
+    }
+
+    @Test
+    public void 플레이어는_컨트롤러를_지정해서_생성할_수_있다() {
+        Player player = new Player("BlackJackKing", 5000, new UserPlayerController());
+
+        PlayerController controller = player.getController();
+        assertEquals(controller.getClass(), UserPlayerController.class);
+    }
+
+    @Test
+    public void 플레이어의_컨트롤러가_null이라면_Com컨트롤러를_가진다() {
+        Player player = new Player("BlackJackKing", 5000, null);
+
+        PlayerController controller = player.getController();
+        assertEquals(controller.getClass(), ComPlayerController.class);
+    }
+
+    @Test
     public void 플레이어는_배팅을_할수있다() {
         Player player = new Player("BlackJackKing", 5000);
         player.placeBet(3000);
