@@ -55,6 +55,7 @@ public class PlayerTest {
         player.placeBet(10000);
     }
 
+    @Test
     public void 플레이어는_상금을_받을_수_있다() {
         Player player = new Player("BlackJackKing", 5000);
         player.receiveReward(3000);
