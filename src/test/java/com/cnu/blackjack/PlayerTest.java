@@ -3,6 +3,7 @@ package com.cnu.blackjack;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class PlayerTest {
 
@@ -61,5 +62,13 @@ public class PlayerTest {
         player.receiveReward(3000);
         int balance = player.getBalance();
         assertEquals(balance, 8000);
+    }
+
+    @Test
+    public void 플레이어는_핸드를_가진다() {
+        Player player = new Player("BlackJackKing", 5000);
+
+        Hand playerHand = player.getHand();
+        assertNotNull(playerHand);
     }
 }
