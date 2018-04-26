@@ -2,11 +2,9 @@ package com.cnu.blackjack;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class AppIOTest {
 
-    @Test(expected = yesOrNoException.class)
+    @Test(expected = YesOrNoException.class)
     public void 물음에_대한_입력은_yes아니면_no다(){
         AppIO.AppIO_in_yesOrNo("yesa");
     }

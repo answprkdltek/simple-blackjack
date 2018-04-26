@@ -10,7 +10,7 @@ public class AppIO {
         }else if (answer.equals("no")){
             return false;
         }else{
-            throw new yesOrNoException();
+            throw new YesOrNoException();
         }
     }
 
