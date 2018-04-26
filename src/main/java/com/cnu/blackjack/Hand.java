@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class Hand {
     private Deck deck;
-    private List<Card> handList = new ArrayList<>();
+    private static List<Card> handList = new ArrayList<>();
 
     public Hand(Deck deck) {
         this.deck = deck;
@@ -20,7 +20,4 @@ public class Hand {
         return card;
     }
 
-    public int getCurrentHandSize() {
-        return handList.size();
-    }
 }

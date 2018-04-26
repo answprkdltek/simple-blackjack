@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private int numberOfDeck;
+    private int numberOfPacks;
     private List<Card> cardList = new ArrayList<>();
 
-    public Deck(int numberOfDeck) {
-        this.numberOfDeck = numberOfDeck;
-        createCards(numberOfDeck);
+    public Deck(int numberOfPacks) {
+        this.numberOfPacks = numberOfPacks;
+        createCards(numberOfPacks);
     }
 
-    private void createCards(int numberOfDeck) {
-        for (int j = 0; j < numberOfDeck; j++) {
+    private void createCards(int numberOfPacks) {
+        for (int j = 0; j < numberOfPacks; j++) {
             for (int i = 1; i <= 13; i++) {
                 for (Suit suit: Suit.values()) {
                     Card card = new Card(i, suit);
