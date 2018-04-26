@@ -1,4 +1,4 @@
 package com.cnu.blackjack;
 
-public class NumberOfPlayersException {
+public class NumberOfPlayersException extends RuntimeException {
 }
