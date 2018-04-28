@@ -20,4 +20,12 @@ public class Hand {
         return card;
     }
 
+    public int getScore(){                   //손에 든 카드의 점수 반환
+        int score = 0;
+        for(int i=0; i<handList.size(); i++){
+            score += (handList.get(i)).getRank();
+        }
+        return score;
+    }
+
 }
