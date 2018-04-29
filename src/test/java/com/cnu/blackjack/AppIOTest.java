@@ -126,7 +126,7 @@ public class AppIOTest {
         String INPUT ="1000";
         setTestInput(INPUT);
 
-        int amount = AppIO.in_betAmount(1000);
+        int amount = AppIO.in_betAmount(1000, 3000);
         assertEquals(1000, amount);
     }
 
@@ -143,7 +143,7 @@ public class AppIOTest {
     }
 
     @Test
-    public void 플레이어수는_최소와_최대사이로_입력받는다() {
+    public void 플레이어수는_1명이상_6명이하로_입력받는다() {
         String INPUT
                 = "0" + NEW_LINE
                 + "7" + NEW_LINE
