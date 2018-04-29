@@ -3,7 +3,7 @@ package com.cnu.blackjack;
 import lombok.Data;
 
 @Data
-public class Card {
+public class Card implements Comparable<Card> {
 
     private int rank;
     private Suit suit;
@@ -17,5 +17,16 @@ public class Card {
         }
         this.rank = rank;
         this.suit = suit;
+    }
+
+    @Override
+    public int compareTo(Card o) {
+        if (this.getRank() != o.getRank()) {
+            return 1;
+        }
+        if (this.getSuit() != o.getSuit()) {
+            return 1;
+        }
+        return 0;
     }
 }

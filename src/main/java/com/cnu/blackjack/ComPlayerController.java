@@ -45,10 +45,11 @@ public class ComPlayerController extends PlayerController{
 
     public boolean wannaHit(Hand hand) {
         int currentScore = Evaluator.checkScore(hand);
-        if(currentScore < 12){
+        if(currentScore < 17){
             return true;
         }
-        return percentageOfBlackjack(currentScore) > 0.1 ? true : false;
+        //return percentageOfBlackjack(currentScore) > 0.1 ? true : false;
+        return false;
     }
 
     private double percentageOfBlackjack(int currentScore){
@@ -82,11 +83,6 @@ public class ComPlayerController extends PlayerController{
 
     private boolean isUsedCard(Card card){
         List<Card> usedCardList = UsedCards.getUsedCardList();
-        for(int i=0; i< usedCardList.size();i++){
-            if (usedCardList.get(i).equals(card)){
-                return true;
-            }
-        }
-        return false;
+        return usedCardList.contains(card);
     }
 }

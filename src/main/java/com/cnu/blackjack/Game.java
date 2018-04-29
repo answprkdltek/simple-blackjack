@@ -75,25 +75,34 @@ public class Game {
         hand.receiveCard(card);
 
         UsedCards.addUsedCardList(card);
+
+        if (deck.getTotalCardCount() == 0) {
+            deck.reset();
+
+            UsedCards.vacateUsedCardList();
+        }
     }
 
     private static void hitPlayers(Dealer dealer, List<Player> players, Deck deck) {
         List<Player> hittingPlayer = new ArrayList<>(players);
         while (hittingPlayer.size() > 0) {
+            List<Player> nextHittingPlayer = new ArrayList<>(hittingPlayer);
             printTable(dealer, players);
 
             for (Player player : hittingPlayer) {
                 if (!player.wannaHit()) {
-                    hittingPlayer.remove(player);
+                    nextHittingPlayer.remove(player);
                     continue;
                 }
 
                 Hand playerHand = player.getHand();
                 giveCard(playerHand, deck);
                 if (Evaluator.checkBurst(playerHand)) {
-                    hittingPlayer.remove(player);
+                    nextHittingPlayer.remove(player);
                 }
             }
+
+            hittingPlayer = nextHittingPlayer;
         }
     }
 
