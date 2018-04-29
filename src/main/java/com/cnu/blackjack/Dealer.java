@@ -1,11 +1,17 @@
 package com.cnu.blackjack;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class Dealer {
+    private Hand hand;
 
-    public int getScore() {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
-        return random.nextInt(17, 25);
+    public Dealer(){
+        this.hand = new Hand();
+    }
+
+    public Hand getHand(){
+        return this.hand;
+    }
+
+    public void addCardToHand(Card card){
+        this.hand.receiveCard(card);
     }
 }
