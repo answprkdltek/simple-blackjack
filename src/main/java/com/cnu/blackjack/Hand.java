@@ -21,7 +21,7 @@ public class Hand {
         this.openStates.clear();
     }
 
-    public void recieveCard(Card card) {
+    public void receiveCard(Card card) {
         this.cards.add(card);
         this.openStates.put(card, true);
     }
