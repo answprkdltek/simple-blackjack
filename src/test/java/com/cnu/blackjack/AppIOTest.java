@@ -1,11 +1,14 @@
 package com.cnu.blackjack;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AppIOTest {
 
@@ -26,42 +29,128 @@ public class AppIOTest {
         String OUTPUT = "Hello Blackjack" + NEW_LINE;
         ByteArrayOutputStream out = getTestOutputStream();
 
-        AppIO.printMessage("Hello Blackjack");
+        AppIO.out_message("Hello Blackjack");
         String output = out.toString();
 
-        Assert.assertEquals(OUTPUT, output);
+        assertEquals(OUTPUT, output);
     }
 
     @Test
-    public void Confirm은_y로_응답하면_true를_반환한다() {
+    public void wannaHit을_y로_답하면_true를_반환한다() {
         String INPUT = "y";
         setTestInput(INPUT);
 
-        boolean wannaHit = AppIO.confirm("Hit 하시겠습니까?");
+        boolean wannaHit = AppIO.in_wannaHit();
 
-        Assert.assertTrue(wannaHit);
+        assertTrue(wannaHit);
     }
 
     @Test
-    public void Confirm은_n으로_응답하면_true를_반환한다() {
+    public void wannaHit을_n으로_답하면_false를_반환한다() {
         String INPUT = "n";
         setTestInput(INPUT);
 
-        boolean wannaHit = AppIO.confirm("Hit 하시겠습니까?");
+        boolean wannaHit = AppIO.in_wannaHit();
 
-        Assert.assertFalse(wannaHit);
+        assertFalse(wannaHit);
     }
 
-    @Test(expected = YesOrNoException.class)
-    public void Confirm은_y또는n으로_응답해야한다() {
-        String INPUT = "I_don't_know";
+    @Test
+    public void wannaHit은_y또는n으로_응답_받을때_까지_물어본다() {
+        String INPUT
+                = "I" + NEW_LINE
+                + "don't" + NEW_LINE
+                + "know" + NEW_LINE
+                + "y" + NEW_LINE;
         setTestInput(INPUT);
 
-        boolean wannaHit = AppIO.confirm("Hit 하시겠습니까?");
+        boolean wannaHit = AppIO.in_wannaHit();
+        assertTrue(wannaHit);
     }
 
-    @Test(expected = NumberOfPlayersException.class)
-    public void 플레이어_수를_입력받을_때_최대_6명까지만_입력가능하다(){
-        AppIO.AppIO_in_numberOfPlayers(111);
+    @Test
+    public void isUser을_y로_답하면_true를_반환한다() {
+        String INPUT = "y";
+        setTestInput(INPUT);
+
+        boolean isUser = AppIO.in_isUser();
+
+        assertTrue(isUser);
+    }
+
+    @Test
+    public void isUser을_n으로_답하면_false를_반환한다() {
+        String INPUT = "n";
+        setTestInput(INPUT);
+
+        boolean isUser = AppIO.in_isUser();
+
+        assertFalse(isUser);
+    }
+
+    @Test
+    public void isUser은_y또는n으로_응답_받을때_까지_물어본다() {
+        String INPUT
+                = "I" + NEW_LINE
+                + "don't" + NEW_LINE
+                + "know" + NEW_LINE
+                + "n" + NEW_LINE;
+        setTestInput(INPUT);
+
+        boolean isUser = AppIO.in_isUser();
+        assertFalse(isUser);
+    }
+
+    @Test
+    public void 플레이어들의_소지금은_정수로_입력받는다() {
+        String INPUT
+                = "백만원" + NEW_LINE
+                + "1000000" + NEW_LINE;
+        setTestInput(INPUT);
+
+        int balance = AppIO.in_playerBalance();
+        assertEquals(1000000, balance);
+    }
+
+    @Test
+    public void 기본배팅액은_정수로_입력받는다() {
+        String INPUT ="1000";
+        setTestInput(INPUT);
+
+        int amount = AppIO.in_minBetAmount();
+        assertEquals(1000, amount);
+    }
+
+    @Test
+    public void 배팅액은_정수로_입력받는다() {
+        String INPUT ="1000";
+        setTestInput(INPUT);
+
+        int amount = AppIO.in_betAmount(1000);
+        assertEquals(1000, amount);
+    }
+
+    @Test
+    public void 배팅액은_최소배팅액과_최대배팅액_사이로_입력받는다() {
+        String INPUT
+                = "999" + NEW_LINE
+                + "3001" + NEW_LINE
+                + "3000" + NEW_LINE;
+        setTestInput(INPUT);
+
+        int amount = AppIO.in_betAmount(1000, 3000);
+        assertEquals(3000, amount);
+    }
+
+    @Test
+    public void 플레이어수는_최소와_최대사이로_입력받는다() {
+        String INPUT
+                = "0" + NEW_LINE
+                + "7" + NEW_LINE
+                + "6" + NEW_LINE;
+        setTestInput(INPUT);
+
+        int nPlayers = AppIO.in_numberOfPlayers(1, 6);
+        assertEquals(6, nPlayers);
     }
 }
