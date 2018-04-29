@@ -1,6 +1,7 @@
 package com.cnu.blackjack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Deck {
@@ -10,6 +11,7 @@ public class Deck {
     public Deck(int numberOfPacks) {
         this.numberOfPacks = numberOfPacks;
         createCards(numberOfPacks);
+        shuffleCards();
     }
 
     private void createCards(int numberOfPacks) {
@@ -29,5 +31,15 @@ public class Deck {
 
     public Card drawCard() {
         return cardList.remove(0);
+    }
+
+    public void reset() {
+        cardList.clear();
+        createCards(numberOfPacks);
+        shuffleCards();
+    }
+
+    private void shuffleCards() {
+        Collections.shuffle(cardList);
     }
 }
