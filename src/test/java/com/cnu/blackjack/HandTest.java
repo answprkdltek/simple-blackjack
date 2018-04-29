@@ -31,6 +31,14 @@ public class HandTest {
         assertEquals(0, nCards);
     }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void 없는_카드를_가져올_수_없다() {
+        Hand hand = new Hand();
+        hand.recieveCard(new Card(1, Suit.CLUB));
+
+        Card card = hand.getCard(1);
+    }
+
     @Test
     public void 현재_가지고있는_카드는_몇장인지(){
         Hand hand = new Hand();
