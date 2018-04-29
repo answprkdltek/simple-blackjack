@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ComPlayerController extends PlayerController{
 
-    public int placeBet(int balance, int minBet, boolean didWinAtPreviousGame, int howMuchEarnAtPreviousGame) {
+    public int placeBet(int balance, int minBet) {
         return 0;
     }
 

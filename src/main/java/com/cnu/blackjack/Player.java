@@ -9,17 +9,13 @@ public class Player {
     private int balance;
     private PlayerController controller;
     private Hand hand;
-    private boolean didWinAtPreviousGame ;
-    private int howMuchEarnPreviousGame;
 
     public Player(String playerName, int balance, ControllerType controllerType) {
         this.playerName = playerName;
         this.balance = balance;
         this.controllerType = controllerType;
         this.hand = new Hand();
-        didWinAtPreviousGame = false;
-        howMuchEarnPreviousGame = 0;
-        if (controllerType ==ControllerType.User){
+        if (controllerType ==ControllerType.USER){
             controller = new UserPlayerController();
         }
         else{
@@ -37,7 +33,7 @@ public class Player {
     }
 
     public int placeBet(int minBet) {
-        int currentBet = controller.placeBet(balance, minBet, didWinAtPreviousGame, howMuchEarnPreviousGame);
+        int currentBet = controller.placeBet(balance, minBet);
         balance -= currentBet;
         return currentBet;
     }
@@ -46,12 +42,7 @@ public class Player {
         return controller.wannaHit(hand);
     }
 
-    public void amIWin(boolean result){
-        didWinAtPreviousGame = result;
-    }
-
     public void receiveReward(int reward) {
-        howMuchEarnPreviousGame = reward;
         balance += reward;
     }
 
