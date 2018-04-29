@@ -15,12 +15,12 @@ public class AppIOTest {
     private static final String NEW_LINE = System.getProperty("line.separator");
 
     private void setTestInput(String input) {
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
+        AppIO.setIn(new ByteArrayInputStream(input.getBytes()));
     }
 
     private ByteArrayOutputStream getTestOutputStream() {
         ByteArrayOutputStream testOut = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(testOut));
+        AppIO.setOut(new PrintStream(testOut));
         return testOut;
     }
 

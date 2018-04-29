@@ -1,26 +1,35 @@
 package com.cnu.blackjack;
 
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.util.Scanner;
 
 public class AppIO {
 
+    private static Scanner scan = new Scanner(System.in);
+    private static PrintStream out = System.out;
+
+    public static void setIn(InputStream inputStream) {
+        scan.close();
+        scan = new Scanner(inputStream);
+    }
+
+    public static void setOut(PrintStream printStream) {
+        out = printStream;
+    }
+
     public static void out_message(String message) {
-        System.out.println(message);
+        out.println(message);
     }
 
     public static void out_errorMessage(String message) {
-        System.out.println("[오류] " + message);
+        out.println("[오류] " + message);
     }
 
     private static String in_line(String message) {
-        System.out.print(message);
+        out.print(message);
 
-        Scanner scan = new Scanner(System.in);
         String answer = scan.nextLine();
-        scan.close();
-
         return answer;
     }
 
