@@ -6,10 +6,10 @@ import lombok.Data;
 public class UserPlayerController extends PlayerController{
 
     public int placeBet(int balance, int minBet) {
-        return AppIO.AppIO_in_bet(balance, minBet);
+        return AppIO.in_betAmount(minBet,balance);
     }
 
     public boolean wannaHit(Hand hand) {
-        return AppIO.AppIO_in_wannaHit();
+        return AppIO.in_wannaHit();
     }
 }
