@@ -90,6 +90,7 @@ public class Game {
             printTable(dealer, players);
 
             for (Player player : hittingPlayer) {
+                AppIO.out_message(player.getPlayerName() + "의 차례:");
                 if (!player.wannaHit()) {
                     nextHittingPlayer.remove(player);
                     continue;
@@ -98,6 +99,7 @@ public class Game {
                 Hand playerHand = player.getHand();
                 giveCard(playerHand, deck);
                 if (Evaluator.checkBurst(playerHand)) {
+                    AppIO.out_message(player.getPlayerName() + "버스트!");
                     nextHittingPlayer.remove(player);
                 }
             }
@@ -173,6 +175,8 @@ public class Game {
     public static Map<Player, Integer> betTable(List<Player> players, int minBetAmount) {
         Map<Player, Integer> bettings = new HashMap<>();
         for(Player player : players){
+            AppIO.out_message(player.getPlayerName() + "의 차례:");
+
             int betAmount = player.placeBet(minBetAmount);
             bettings.put(player, betAmount);
         }
@@ -187,11 +191,13 @@ public class Game {
     }
 
     public static void printTable(Dealer dealer, List<Player> players) {
+        AppIO.out_message("");
         AppIO.out_message("=== 테이블 현황 ===");
         printHand("딜러", dealer.getHand());
         for (Player player : players) {
             printHand(player.getPlayerName(), player.getHand());
         }
+        AppIO.out_message("");
     }
 
     private static void printHand(String name, Hand hand) {
