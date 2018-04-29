@@ -2,58 +2,52 @@ package com.cnu.blackjack;
 
 import lombok.Data;
 
-import java.util.Scanner;
-
 @Data
 public class Player {
+    private String playerName;
+    private ControllerType controllerType;
     private int balance;
-    private int currentBet;
+    private PlayerController controller;
+    private Hand hand;
 
-    public Player(int balance) {
+    public Player(String playerName, int balance, ControllerType controllerType) {
+        this.playerName = playerName;
         this.balance = balance;
-    }
-
-    public Player(int balance, PlayerController playerController) {
-        this.balance = balance;
-        if(playerController.equals("null")){
-            ComPlayerController comPlayerController  = new ComPlayerController();
-            comPlayerController.playGame();
+        this.controllerType = controllerType;
+        this.hand = new Hand();
+        if (controllerType ==ControllerType.User){
+            controller = new UserPlayerController();
         }
         else{
-            new UserPlayerController();
+            controller = new ComPlayerController();
         }
     }
 
-    public void placeBet(int bet) {
-        if (bet > this.balance) {
-            throw new NotEnoughBalanceException();
-        }
-        this.balance -= bet;
-        this.currentBet = bet;
-    }
-
-    public String getPlayerName() {
-        Scanner scan = new Scanner(System.in);
-        return scan.nextLine();
-    }
-
-    public PlayerController getController() {
-        return new PlayerController();
-    }
-
-    public Hand getHand() {
-        return new Hand();
-    }
-
-    public void receiveReward() {
-        if(winGame()){
-            balance += (currentBet*1.5);
-        }
-        else if(winGamewithBlackjack()){
-            balance += (currentBet*2);
+    public boolean placeBaseMoney(int baseMoney){
+        if(balance < baseMoney){
+            return false;
         }
         else{
-            balance += 0;
+            balance -= baseMoney;
+            return true;
         }
+    }
+
+    public int placeBet() {
+        int currentBet = controller.placeBet(balance);
+        balance -= currentBet;
+        return currentBet;
+    }
+
+    public boolean wannaHit(){
+        return controller.wannaHit();
+    }
+
+    public void receiveReward(int reward) {
+        balance += reward;
+    }
+
+    public void addCardToHand(Card card) {
+        this.hand.receiveCard(card);
     }
 }
