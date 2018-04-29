@@ -115,4 +115,34 @@ public class AppIO {
             }
         }
     }
+
+    public static int in_betAmount(int minBetAmount, int maxBetAmount) {
+        while (true) {
+            try {
+                int betAmount = AppIO.in_int("배팅액을 입력하십시오: ", minBetAmount, maxBetAmount);
+                return betAmount;
+            }
+            catch (NumberFormatException e) {
+                AppIO.out_errorMessage("잘못된 입력입니다.");
+            }
+            catch (NumberOutOfBoundsException e) {
+                AppIO.out_errorMessage(String.format("배팅액은 %d~%d여야 합니다.", minBetAmount, maxBetAmount));
+            }
+        }
+    }
+
+    public static int in_numberOfPlayers(int minNumberOfPlayers, int maxNumberOfPlayers) {
+        while (true) {
+            try {
+                int betAmount = AppIO.in_int("플레이어 수를 입력하십시오: ", minNumberOfPlayers, maxNumberOfPlayers);
+                return betAmount;
+            }
+            catch (NumberFormatException e) {
+                AppIO.out_errorMessage("잘못된 입력입니다.");
+            }
+            catch (NumberOutOfBoundsException e) {
+                AppIO.out_errorMessage(String.format("플레이어 수는 %d~%d여야 합니다.", minNumberOfPlayers, maxNumberOfPlayers));
+            }
+        }
+    }
 }
