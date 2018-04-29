@@ -10,7 +10,7 @@ public class HandTest {
     public void 핸드는_카드를_받을수_있다() {
         Hand hand = new Hand();
         Card card = new Card(1, Suit.CLUB);
-        hand.recieveCard(card);
+        hand.receiveCard(card);
 
         int nCards = hand.getCurrentHandSize();
         assertEquals(1, nCards);
@@ -22,8 +22,8 @@ public class HandTest {
     @Test
     public void 게임이_끝나면_카드를_모두버린다(){
         Hand hand = new Hand();
-        hand.recieveCard(new Card(1, Suit.CLUB));
-        hand.recieveCard(new Card(5, Suit.HEART));
+        hand.receiveCard(new Card(1, Suit.CLUB));
+        hand.receiveCard(new Card(5, Suit.HEART));
 
         hand.clearHand();
 
@@ -34,7 +34,7 @@ public class HandTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void 없는_카드를_가져올_수_없다() {
         Hand hand = new Hand();
-        hand.recieveCard(new Card(1, Suit.CLUB));
+        hand.receiveCard(new Card(1, Suit.CLUB));
 
         Card card = hand.getCard(1);
     }
@@ -44,8 +44,8 @@ public class HandTest {
         Hand hand = new Hand();
         Card card1 = new Card(1, Suit.DIAMOND);
         Card card2 = new Card(2, Suit.DIAMOND);
-        hand.recieveCard(card1);
-        hand.recieveCard(card2);
+        hand.receiveCard(card1);
+        hand.receiveCard(card2);
         int nCards = hand.getCurrentHandSize();
         assertEquals(2, nCards);
     }
@@ -53,8 +53,8 @@ public class HandTest {
     @Test
     public void 카드를_받을땐_공개된상태이다(){
         Hand hand = new Hand();
-        hand.recieveCard(new Card(1, Suit.CLUB));
-        hand.recieveCard(new Card(5, Suit.HEART));
+        hand.receiveCard(new Card(1, Suit.CLUB));
+        hand.receiveCard(new Card(5, Suit.HEART));
 
         assertTrue(hand.isOpened(0));
         assertTrue(hand.isOpened(1));
@@ -63,7 +63,7 @@ public class HandTest {
     @Test
     public void 카드를_뒤집을_수_있다(){
         Hand hand = new Hand();
-        hand.recieveCard(new Card(1, Suit.CLUB));
+        hand.receiveCard(new Card(1, Suit.CLUB));
 
         hand.closeCard(0);
         boolean isClosed = (!hand.isOpened(0));
@@ -73,7 +73,7 @@ public class HandTest {
     @Test
     public void 카드를_오픈할_수_있다(){
         Hand hand = new Hand();
-        hand.recieveCard(new Card(1, Suit.CLUB));
+        hand.receiveCard(new Card(1, Suit.CLUB));
         hand.closeCard(0);
 
         hand.openCard(0);
