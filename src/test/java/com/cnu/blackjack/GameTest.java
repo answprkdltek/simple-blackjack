@@ -5,7 +5,34 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class GameTest {
+
+    @Test
+    public void 모든_플레이어가_최소_배팅액을_가지면_플레이가능() {
+        List<Player> players = new ArrayList<>();
+        Deck deck = new Deck(3);
+        players.add(new Player("AAA", 1000, ControllerType.COM));
+        players.add(new Player("BBB", 9999, ControllerType.COM));
+        players.add(new Player("CCC", 100, ControllerType.COM));
+        Game game = new Game(players, deck, 100);
+
+        assertTrue(game.isPlayable());
+    }
+
+    @Test
+    public void 모든_플레이어가_최소_배팅액을_가지지못하면_플레이불가능() {
+        List<Player> players = new ArrayList<>();
+        Deck deck = new Deck(3);
+        players.add(new Player("AAA", 1000, ControllerType.COM));
+        players.add(new Player("BBB", 9999, ControllerType.COM));
+        players.add(new Player("CCC", 100, ControllerType.COM));
+        Game game = new Game(players, deck, 10000);
+
+        assertFalse(game.isPlayable());
+    }
 
     @Test
     public void 배팅액을_입력할수있다(){
