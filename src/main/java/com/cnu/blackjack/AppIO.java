@@ -145,4 +145,8 @@ public class AppIO {
             }
         }
     }
+
+    public static String in_playerName() {
+        return AppIO.in_line("플레이어의 이름을 입력하시오: ");
+    }
 }
