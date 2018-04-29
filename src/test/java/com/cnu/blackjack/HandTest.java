@@ -25,7 +25,7 @@ public class HandTest {
         hand.recieveCard(new Card(1, Suit.CLUB));
         hand.recieveCard(new Card(5, Suit.HEART));
 
-        Hand.clearHand();
+        hand.clearHand();
 
         int nCards = hand.getCurrentHandSize();
         assertEquals(0, nCards);
