@@ -4,7 +4,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -35,80 +37,128 @@ public class GameTest {
     }
 
     @Test
-    public void 배팅액을_입력할수있다(){
+    public void 총_4명의_플레이어_중_2명의_플레이어가_최소배팅액을_가지지_못하면_플레이_가능한_플레이어는_2명이다(){
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("AAA",1000,ControllerType.COM));
+        players.add(new Player("BBB",1000,ControllerType.COM));
+        players.add(new Player("CCC",100,ControllerType.COM));
+        players.add(new Player("DDD",200,ControllerType.COM));
 
-
+        assertEquals(2,getPlayablePlayers(players,500).size());
     }
 
     @Test
-    public void 배팅이_불가능한_플레이어를_제외한_모든_플레이어가_배팅을하지않으면_게임을_시작할수없다(){
+    public void 플레이어가_1000원을_배팅했다면_betTable의_해당_플레이어의_배팅액은_1000원이다(){
+        List<Player> players = new ArrayList<>();
+        Player player = new Player("SSS",1000,ControllerType.USER);
+        players.add(player);
+        players.add(new Player("AAA",1000,ControllerType.COM));
+        players.add(new Player("BBB",1000,ControllerType.COM));
+        players.add(new Player("CCC",100,ControllerType.COM));
+        players.add(new Player("DDD",200,ControllerType.COM));
 
+        assertEquals(1000,betTable(players,500).get(player));
     }
 
     @Test
-    public void 합21은_19를_이긴다(){
+    public void 딜러의_점수가_19일_때_점수가_21인_플레이어가_이긴다(){
+        List<Player> players = new ArrayList<>();
+        Player player = new Player("winner",1000,ControllerType.COM);
+        player.getHand().receiveCard(new Card(1,Suit.SPADE));
+        player.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player);
 
+        Dealer dealer = new Dealer();
+        dealer.getHand().receiveCard(new Card(12,Suit.HEART));
+        dealer.getHand().receiveCard(new Card(9,Suit.HEART));
+
+        assertEquals(player,getWinners(dealer,players).get(0));
     }
 
     @Test
-    public void 게임에_승리한_플레이어를_알아낼_수_있다(){
-        Player player = new Player(1000);
-        Player player2 = new Player(1000);
+    public void 게임에_승리한_플레이어들의_수를_알아낼_수_있다(){
+        List<Player> players = new ArrayList<>();
+        Player player1 = new Player("winner",1000,ControllerType.COM);
+        player1.getHand().receiveCard(new Card(1,Suit.SPADE));
+        player1.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player1);
 
-        List<Player> players;  //플레이어들
-        Deck deck;
-        Game game;
+        Player player2 = new Player("winner",1000,ControllerType.COM);
+        player2.getHand().receiveCard(new Card(1,Suit.SPADE));
+        player2.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player2);
 
-        Hand playerHand = player.getHand();
-        playerHand.receiveCard(new Card(10,Suit.DIAMOND));
-        playerHand.receiveCard(new Card(10,Suit.SPADE));
-        Hand playerHand2 = player2.getHand();
-        playerHand2.receiveCard(new Card(9,Suit.DIAMOND));
-        playerHand2.receiveCard(new Card(9,Suit.CLUB));
+        Player player3 = new Player("loser",1000,ControllerType.COM);
+        player3.getHand().receiveCard(new Card(2,Suit.SPADE));
+        player3.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player3);
 
-        List<Player> winners = game.누가이김();   //이긴 플레이어들
+        Dealer dealer = new Dealer();
+        dealer.getHand().receiveCard(new Card(12,Suit.HEART));
+        dealer.getHand().receiveCard(new Card(9,Suit.HEART));
 
-
-        assertEquals(player.getBalance() == 1150);
-
+        assertEquals(2,getWinners(dealer,players).size());
     }
 
     @Test
-    public void 게임에_승리한_플레이어는_배팅금액의_15배를_보상_받는다(){
-        Player player = new Player(1000);
-        Player player2 = new Player(1000);
+    public void 게임에_승리한_플레이어는_배팅금액의_150퍼센트를_보상_받는다(){
+        List<Player> players = new ArrayList<>();
+        Player player = new Player("winner",1000,ControllerType.COM);
+        player.getHand().receiveCard(new Card(1,Suit.SPADE));
+        player.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player);
 
-        List<Player> players;  //플레이어들
-        Deck deck;
-        Game game;
+        Dealer dealer = new Dealer();
+        dealer.getHand().receiveCard(new Card(12,Suit.HEART));
+        dealer.getHand().receiveCard(new Card(9,Suit.HEART));
 
-        Hand playerHand = player.getHand();
-        playerHand.receiveCard(new Card(10,Suit.DIAMOND));
-        playerHand.receiveCard(new Card(10,Suit.SPADE));
-        Hand playerHand2 = player2.getHand();
-        playerHand2.receiveCard(new Card(9,Suit.DIAMOND));
-        playerHand2.receiveCard(new Card(9,Suit.CLUB));
+        Map<Player,Integer> bettings = betTable(players,1000);
+        List<Player> Winners = getWinners(dealer,players);
 
-        player.placeBet(100);
-        player2.placeBet(100);
+        giveRewards(Winners,bettings);
 
-        List<Player> winners = new ArrayList<>();   //이긴 플레이어들
-        game.누가이김()
-
-
-
-        assertEquals(player.getBalance() == 1150);
-
+        assertEquals(1500,player.getBalance());
     }
 
     @Test
     public void 게임에_패배한_플레이어는_보상이없다(){
+        List<Player> players = new ArrayList<>();
+        Player player = new Player("loser",1000,ControllerType.COM);
+        player.getHand().receiveCard(new Card(2,Suit.SPADE));
+        player.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player);
 
+        Dealer dealer = new Dealer();
+        dealer.getHand().receiveCard(new Card(12,Suit.HEART));
+        dealer.getHand().receiveCard(new Card(9,Suit.HEART));
+
+        Map<Player,Integer> bettings = betTable(players,1000);
+        List<Player> Winners = getWinners(dealer,players);
+
+        giveRewards(Winners,bettings);
+
+        assertEquals(0,player.getBalance());
     }
 
     @Test
     public void 게임이종료되면_사용된카드를_정리한다(){
+        List<Player> players = new ArrayList<>();
+        Player player = new Player("loser",1000,ControllerType.COM);
+        player.getHand().receiveCard(new Card(2,Suit.SPADE));
+        player.getHand().receiveCard(new Card(13,Suit.CLUB));
+        players.add(player);
 
+        Dealer dealer = new Dealer();
+        dealer.getHand().receiveCard(new Card(12,Suit.HEART));
+        dealer.getHand().receiveCard(new Card(9,Suit.HEART));
+
+        Map<Player,Integer> bettings = betTable(players,1000);
+        List<Player> Winners = getWinners(dealer,players);
+
+        giveRewards(Winners,bettings);
+
+        clearTable(dealer,players);
+
+        assertEquals(0,player.getHand().getCurrentHandSize());
     }
-
 }
