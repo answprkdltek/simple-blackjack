@@ -89,4 +89,21 @@ public class AppIO {
             }
         }
     }
+
+    public static int in_minBetAmount() {
+        while (true) {
+            try {
+                int minValue = 0;
+                int maxValue = Integer.MAX_VALUE;
+                int minBetAmount = AppIO.in_int("최소 배팅액을 입력하십시오: ", minValue, maxValue);
+                return minBetAmount;
+            }
+            catch (NumberFormatException e) {
+                AppIO.out_errorMessage("잘못된 입력입니다.");
+            }
+            catch (NumberOutOfBoundsException e) {
+                AppIO.out_errorMessage("최소배팅액은 0보다 작을 수 없습니다.");
+            }
+        }
+    }
 }
