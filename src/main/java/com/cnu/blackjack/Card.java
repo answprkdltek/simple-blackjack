@@ -9,10 +9,12 @@ public class Card {
     private Suit suit;
 
     public Card(int rank, Suit suit) {
-        if (rank > 13) {
+        if (rank > 13 || rank < 1) {      //수정
             throw new NoRankException();
         }
-
+        if(suit == null){                //추가
+            throw new NoSuitExecption();
+        }
         this.rank = rank;
         this.suit = suit;
     }
